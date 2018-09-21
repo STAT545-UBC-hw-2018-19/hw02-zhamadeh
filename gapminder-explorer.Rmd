@@ -1,0 +1,29 @@
+---
+title: "Gapminder-Explorer"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r}
+
+library(gapminder)
+
+library(tidyverse)
+```
+
+## Overview of data
+
+First lets find out how big this data set is, how many variables and observations there are, and what type of variables it has using the str() and summary() functions
+
+```{r}
+str(gapminder)
+summary(gapminder)
+```
+
+The str() function tells us that the gapminder dataset is a tibble dataframe with 1704 observations across 6 different variables. It also shows us the first few data points for each variable, along with the variable type, so the country and continent variables are of the factor type while year and population are of the integer type.
+
+The summary() function tells us about the variation of each variable. For categorical (factor) variables such as country and contient, it lists the count for each level, whereas for integer and numerical variables, it provides a 6-digit summary.
+
