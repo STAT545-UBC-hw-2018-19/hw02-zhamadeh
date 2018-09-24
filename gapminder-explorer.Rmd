@@ -57,9 +57,72 @@ Alternatively, the `summary()` method can perform some simple data transformatio
 summary(gapminder)
 ```
 
+## Exploring individual variable
+
+#### Categorical variable: continent
+
+First, select the categorical variable, "continent", and store in the value "c". Then use the `summary()` method to retrieve a summary of this variable. We can see there are 5 continents here: Africa, Americas, Asia, Europe and Oceania. The number of obserations with each continent are tallied alongside.  
+```{r}
+#first select all observations of the continent variable and place in the value 'c'
+c <- select(gapminder, continent)
+
+#use the summary() method to retrieve desired statistics
+summary(c)
+
+#ggplot(c)+ geom_area(mapping=aes(stat="bin"))
+```
 
 
-function tells us that the gapminder dataset is a tibble dataframe with 1704 observations across 6 different variables. It also shows us the first few data points for each variable, along with the variable type, so the country and continent variables are of the factor type while year and population are of the integer type.
+#### Numerical variable: population
 
-The `summary()` function tells us about the variation of each variable. For categorical (factor) variables such as country and contient, it lists the count for each level, whereas for integer and numerical variables, it provides a 6-digit summary.
+Next lets look at the population variable by storing it in the value "p". Using the `summary()` method again, we get a 6-digit summary (min,) describing the distribution of this variable
+
+```{r}
+#place pop variable of gapminder in "p"
+p <- select(gapminder, pop)
+
+#summarize 'p' with 6-digit summary
+summary(p)
+```
+
+## Exploring various plot types
+
+Here we're going to compare the life expectancy distribution of Asia and Europe in the year 2007. First, you `filter` out the gapminder dataset for observations that have either "Asia" or "Europe" as their continent and year as 2007. Then you pipe this into the `select()` method to select only life expectancy and continent for these observations. Then we plot a kernal density plot of life expectancy where each line represents a continent. This plot shows that Europe has, on average, a higher life expectancy than Asia. There is also a narrower distribution for Europe that ranges from about 67-83 years whereas the wider distribution of Asia ranges from 34-83. Europe also has a notable binomial peak, with one peak around 80 years and one around 75 years. 
+
+```{r}
+#use of filter() and select() to place life expectancy of observations that are only from Asia or Europe in the variable 'g'
+g <- filter(gapminder, continent %in% c("Asia", "Europe"), year == 2007) %>% select(lifeExp, continent)
+
+#plotting kernal density plot of life expectancy with each line representing continent
+ggplot(g) + geom_density(mapping=aes(x=lifeExp, linetype = continent))
+```
+
+Next lets look at life expectancy in relation to GDP per capita. First we filter out the observations for the year 2007, then creating a dot plot with a line of best fit of life expectancy on the y-axis and gdpPercap on the x-axis. This graph shows us that there is a fair connection between the two variables as there is little variability among observations. At high gdpPercap, life expectancy remains relatively high despite changes in gdpPercap until a certain threshold is reached, below of which there is a signficant reduction in life expectancy in relation to a drop in gdpPercap.
+
+```{r}
+#filter observations for only those from the year 2007
+k <- filter(gapminder, year == 2007)
+
+#plot the gdpPercap versus the life expectancy and incorporate a line of best fit
+ggplot(k, mapping = aes(x=gdpPercap, y=lifeExp)) + geom_point() + geom_smooth()
+```
+
+## Doing more!
+
+Here is a way to filter information according to a vector of possible values. We want to collect observations who's country is either Rwanda or Afghanistan so we can use the `filter()` method and set country to the vector `c("Rwanda", "Afghanistan")`
+
+```{r}
+filter(gapminder, country == c("Rwanda", "Afghanistan"))
+```
+
+
+
+
+
+
+
+
+
+
+
 
