@@ -125,21 +125,16 @@ $(document).ready(function () {
 </div>
 
 
-<pre class="r"><code>library(gapminder)
-
-library(tidyverse)</code></pre>
-<pre><code>## ── Attaching packages ──────────────────────────── tidyverse 1.2.1 ──</code></pre>
-<pre><code>## ✔ ggplot2 3.0.0     ✔ purrr   0.2.5
-## ✔ tibble  1.4.2     ✔ dplyr   0.7.6
-## ✔ tidyr   0.8.1     ✔ stringr 1.3.1
-## ✔ readr   1.1.1     ✔ forcats 0.3.0</code></pre>
-<pre><code>## ── Conflicts ─────────────────────────────── tidyverse_conflicts() ──
-## ✖ dplyr::filter() masks stats::filter()
-## ✖ dplyr::lag()    masks stats::lag()</code></pre>
-<div id="overview-of-data" class="section level2">
-<h2>Overview of data</h2>
-<p>First lets find out how big this data set is, how many variables and observations there are, and what type of variables it has using the str() and summary() functions</p>
-<pre class="r"><code>str(gapminder)</code></pre>
+<div id="bringing-in-data" class="section level2">
+<h2>Bringing in data</h2>
+<p>First lets begin by loading the gapminder dataset and the tidyverse package. Both must first be installed in the console using the <code>install.packages(&quot;&quot;)</code> function.</p>
+<p>Now the packages can be primed using the <code>library()</code> function for both <code>&quot;gapminder&quot;</code> and <code>&quot;tidyverse&quot;</code></p>
+</div>
+<div id="smell-testing-data" class="section level2">
+<h2>Smell testing data</h2>
+<div id="structure-of-the-gapminder-object" class="section level3">
+<h3>Structure of the gapminder object</h3>
+<p>The <code>str()</code> command can tell us about the structure of the gapminder object:</p>
 <pre><code>## Classes 'tbl_df', 'tbl' and 'data.frame':    1704 obs. of  6 variables:
 ##  $ country  : Factor w/ 142 levels &quot;Afghanistan&quot;,..: 1 1 1 1 1 1 1 1 1 1 ...
 ##  $ continent: Factor w/ 5 levels &quot;Africa&quot;,&quot;Americas&quot;,..: 3 3 3 3 3 3 3 3 3 3 ...
@@ -147,7 +142,42 @@ library(tidyverse)</code></pre>
 ##  $ lifeExp  : num  28.8 30.3 32 34 36.1 ...
 ##  $ pop      : int  8425333 9240934 10267083 11537966 13079460 14880372 12881816 13867957 16317921 22227415 ...
 ##  $ gdpPercap: num  779 821 853 836 740 ...</code></pre>
-<pre class="r"><code>summary(gapminder)</code></pre>
+<div id="object" class="section level5">
+<h5>Object</h5>
+<ul>
+<li>A general look at the output shows us several variables and the first few values for each observation which tells us this is 2-dimensional data with different variable types making this a dataframe</li>
+</ul>
+</div>
+<div id="class" class="section level5">
+<h5>Class</h5>
+<ul>
+<li>The output defines class in the first line as a: tibble_dataframe, tibble and data.frame</li>
+</ul>
+</div>
+<div id="number-of-variablescolumns" class="section level5">
+<h5>Number of variables/columns</h5>
+<ul>
+<li>There are 6 variables, meaning there are 6 columns</li>
+</ul>
+</div>
+<div id="number-of-observationsrows" class="section level5">
+<h5>Number of observations/rows</h5>
+<ul>
+<li>There are 1704 observations, meaning there are 1704 rows</li>
+</ul>
+</div>
+<div id="data-type-of-each-variable" class="section level5">
+<h5>Data type of each variable</h5>
+<ul>
+<li>Country and continent variables are of the type factor</li>
+<li>Year and population are of the type integer</li>
+<li>Life expectancy is of the type numerical</li>
+</ul>
+</div>
+</div>
+<div id="summary-of-the-gapminder-object" class="section level3">
+<h3>Summary of the gapminder object</h3>
+<p>Alternatively, the <code>summary()</code> method can perform some simple data transformations and provide us with a 6-digit summary for numerical variables (integer, numerical) or counts for categorical variables (factor). This would be more useful to get a simple look at the distribution of each variable.</p>
 <pre><code>##         country        continent        year         lifeExp     
 ##  Afghanistan:  12   Africa  :624   Min.   :1952   Min.   :23.60  
 ##  Albania    :  12   Americas:300   1st Qu.:1966   1st Qu.:48.20  
@@ -164,8 +194,9 @@ library(tidyverse)</code></pre>
 ##  3rd Qu.:1.959e+07   3rd Qu.:  9325.5  
 ##  Max.   :1.319e+09   Max.   :113523.1  
 ## </code></pre>
-<p>The str() function tells us that the gapminder dataset is a tibble dataframe with 1704 observations across 6 different variables. It also shows us the first few data points for each variable, along with the variable type, so the country and continent variables are of the factor type while year and population are of the integer type.</p>
-<p>The summary() function tells us about the variation of each variable. For categorical (factor) variables such as country and contient, it lists the count for each level, whereas for integer and numerical variables, it provides a 6-digit summary.</p>
+<p>function tells us that the gapminder dataset is a tibble dataframe with 1704 observations across 6 different variables. It also shows us the first few data points for each variable, along with the variable type, so the country and continent variables are of the factor type while year and population are of the integer type.</p>
+<p>The <code>summary()</code> function tells us about the variation of each variable. For categorical (factor) variables such as country and contient, it lists the count for each level, whereas for integer and numerical variables, it provides a 6-digit summary.</p>
+</div>
 </div>
 
 

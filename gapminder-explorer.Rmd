@@ -4,26 +4,62 @@ output: html_document
 ---
 
 ```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE)
+knitr::opts_chunk$set(echo = FALSE)
 ```
+## Bringing in data
+First lets begin by loading the gapminder dataset and the tidyverse package. Both must first be installed in the console using the `install.packages("")` function. 
 
-```{r}
+Now the packages can be primed using the `library()` function for both `"gapminder"` and `"tidyverse"`
 
+
+```{r, include=FALSE}
 library(gapminder)
-
 library(tidyverse)
 ```
 
-## Overview of data
+## Smell testing data
 
-First lets find out how big this data set is, how many variables and observations there are, and what type of variables it has using the str() and summary() functions
+### Structure of the gapminder object
+
+The `str()` command can tell us about the structure of the gapminder object:
 
 ```{r}
 str(gapminder)
+```
+##### Object
+
+* A general look at the output shows us several variables and the first few values for each observation which tells us this is 2-dimensional data with different variable types making this a dataframe
+
+
+##### Class
+
+* The output defines class in the first line as a: tibble_dataframe, tibble and data.frame
+
+##### Number of variables/columns
+
+* There are 6 variables, meaning there are 6 columns
+
+##### Number of observations/rows
+
+* There are 1704 observations, meaning there are 1704 rows
+
+##### Data type of each variable
+
+* Country and continent variables are of the type factor
+* Year and population are of the type integer
+* Life expectancy is of the type numerical
+
+### Summary of the gapminder object
+
+Alternatively, the `summary()` method can perform some simple data transformations and provide us with a 6-digit summary for numerical variables (integer, numerical) or counts for categorical variables (factor). This would be more useful to get a simple look at the distribution of each variable.
+
+```{r}
 summary(gapminder)
 ```
 
-The str() function tells us that the gapminder dataset is a tibble dataframe with 1704 observations across 6 different variables. It also shows us the first few data points for each variable, along with the variable type, so the country and continent variables are of the factor type while year and population are of the integer type.
 
-The summary() function tells us about the variation of each variable. For categorical (factor) variables such as country and contient, it lists the count for each level, whereas for integer and numerical variables, it provides a 6-digit summary.
+
+function tells us that the gapminder dataset is a tibble dataframe with 1704 observations across 6 different variables. It also shows us the first few data points for each variable, along with the variable type, so the country and continent variables are of the factor type while year and population are of the integer type.
+
+The `summary()` function tells us about the variation of each variable. For categorical (factor) variables such as country and contient, it lists the count for each level, whereas for integer and numerical variables, it provides a 6-digit summary.
 
