@@ -1,6 +1,6 @@
 ---
 title: "Gapminder Explorer"
-output: html_document
+output: github_document
 ---
 ## Overview
 * #### *Bringing in the data*
@@ -9,8 +9,8 @@ output: html_document
 * #### *Exploring various plot types*
 * #### *Doing more!*
 
-```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = FALSE)
+```{r setup}
+knitr::opts_chunk$set(echo = TRUE)
 ```
 ## Bringing in data
 First lets begin by loading the gapminder dataset and the tidyverse package. Both must first be installed in the console using the `install.packages("")` function. 
