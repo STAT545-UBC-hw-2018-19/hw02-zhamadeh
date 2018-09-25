@@ -1,7 +1,13 @@
 ---
-title: "Gapminder-Explorer"
+title: "Gapminder Explorer"
 output: html_document
 ---
+## Overview
+* #### *Bringing in the data*
+* #### *Smell testing data*
+* #### *Exploring individual variables*
+* #### *Exploring various plot types*
+* #### *Doing more!*
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = FALSE)
@@ -9,10 +15,11 @@ knitr::opts_chunk$set(echo = FALSE)
 ## Bringing in data
 First lets begin by loading the gapminder dataset and the tidyverse package. Both must first be installed in the console using the `install.packages("")` function. 
 
+
 Now the packages can be primed using the `library()` function for both `gapminder` and `tidyverse`
 
 
-```{r, include=FALSE}
+```{r,  echo=TRUE}
 library(gapminder)
 library(tidyverse)
 ```
@@ -23,17 +30,18 @@ library(tidyverse)
 
 The `str()` command can tell us about the structure of the gapminder object:
 
-```{r}
+```{r, echo=TRUE}
 str(gapminder)
 ```
 ##### Object
 
-* A general look at the output shows us several variables and the first few values for each observation which tells us this is 2-dimensional data with different variable types making this a dataframe
+* A general look at the output shows us several variables and the first few values for each observation 
+* This tells us this is 2-dimensional data with different variable types making this dataset a dataframe object
 
 
 ##### Class
 
-* The output defines class in the first line as a: tibble_dataframe, tibble and data.frame
+* The output defines class of this dataset in the first line as a: tibble_dataframe, tibble and data.frame
 
 ##### Number of variables/columns
 
@@ -53,7 +61,7 @@ str(gapminder)
 
 Alternatively, the `summary()` method can perform some simple data transformations and provide us with a 6-digit summary for numerical variables (integer, numerical) or counts for categorical variables (factor). This would be more useful to get a simple look at the distribution of each variable.
 
-```{r}
+```{r, echo=TRUE}
 summary(gapminder)
 ```
 
@@ -62,7 +70,7 @@ summary(gapminder)
 #### Categorical variable: continent
 
 First, select the categorical variable, "continent", and store in the value "c". Then use the `summary()` method to retrieve a summary of this variable. We can see there are 5 continents here: Africa, Americas, Asia, Europe and Oceania. The number of obserations with each continent are tallied alongside.  
-```{r}
+```{r, echo=TRUE}
 #first select all observations of the continent variable and place in the value 'c'
 
 c <- select(gapminder, continent)
@@ -71,28 +79,36 @@ c <- select(gapminder, continent)
 
 summary(c)
 
+#next lets plot a bar graph of the counts of each continent
+
+ggplot(c) + geom_bar(mapping=aes(x=continent))
+
 ```
 
 
-#### Numerical variable: population
+#### Numerical variable: life expectancy
 
-Next lets look at the population variable by storing it in the value "p". Using the `summary()` method again, we get a 6-digit summary (min,) describing the distribution of this variable
+Next lets look at the life expectancy variable by storing it in the value "p" along with year (2007 only) and continent for further analysis. Using the `summary()` method again, we get a 6-digit summary (min,1st quartile, median, mean, 3rd quartile, max) describing the distribution of this variable. We can then plot the life expectancy according to continent in a boxplot. Clearly, Africa has the widest range of life expectancy and the lowest mean. Asia and America have notable outliers. Oceania has the highest avereage life expectancy.
 
-```{r}
-#place pop variable of gapminder in "p"
+```{r, echo=TRUE}
+#place lifeExp variable of gapminder in "p", along with continent and year for further analysis
 
-p <- select(gapminder, pop)
+p <- select(gapminder, lifeExp,continent,year) %>% filter(year == 2007)
 
 #summarize 'p' with 6-digit summary
 
 summary(p)
+
+#next lets look at the distribution of the population variable
+
+ggplot(p) + geom_boxplot(mapping=aes(x=continent, y = lifeExp))
 ```
 
 ## Exploring various plot types
 
 Here we're going to compare the life expectancy distribution of Asia and Europe in the year 2007. First, you `filter` out the gapminder dataset for observations that have either "Asia" or "Europe" as their continent and year as 2007. Then you pipe this into the `select()` method to select only life expectancy and continent for these observations. Then we plot a kernal density plot of life expectancy where each line represents a continent. This plot shows that Europe has, on average, a higher life expectancy than Asia. There is also a narrower distribution for Europe that ranges from about 67-83 years whereas the wider distribution of Asia ranges from 34-83. Europe also has a notable binomial peak, with one peak around 80 years and one around 75 years. 
 
-```{r}
+```{r, echo=TRUE}
 #use of filter() and select() to place life expectancy of observations that are only from Asia or Europe in the variable 'g'
 
 g <- filter(gapminder, continent %in% c("Asia", "Europe"), year == 2007) %>% select(lifeExp, continent)
@@ -104,7 +120,7 @@ ggplot(g) + geom_density(mapping=aes(x=lifeExp, linetype = continent))
 
 Next lets look at life expectancy in relation to GDP per capita. First we filter out the observations for the year 2007, then creating a dot plot with a line of best fit of life expectancy on the y-axis and gdpPercap on the x-axis. This graph shows us that there is a fair connection between the two variables as there is little variability among observations. At high gdpPercap, life expectancy remains relatively high despite changes in gdpPercap until a certain threshold is reached, below of which there is a signficant reduction in life expectancy in relation to a drop in gdpPercap.
 
-```{r}
+```{r, echo=TRUE}
 #filter observations for only those from the year 2007
 
 k <- filter(gapminder, year == 2007)
@@ -118,7 +134,7 @@ ggplot(k, mapping = aes(x=gdpPercap, y=lifeExp)) + geom_point() + geom_smooth()
 
 Here is a way to filter information according to a vector of possible values. We want to collect observations who's country is either Rwanda or Afghanistan so we can use the `filter()` method and set country to the vector `c("Rwanda", "Afghanistan")`
 
-```{r}
+```{r, echo=TRUE}
 filter(gapminder, country == c("Rwanda", "Afghanistan"))
 ```
 
